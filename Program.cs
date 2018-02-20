@@ -10,6 +10,7 @@ namespace App2
             long id = 6830104511;
             string webapi = "";
             bool run = true;
+            
 
             Allegro.servicePortClient all = new Allegro.servicePortClient();
             
@@ -26,11 +27,12 @@ namespace App2
             {
                 var data = all.doGetItemsListAsync(request);
                 Console.WriteLine(DateTime.Now.ToString("h:mm:ss tt"));
+                Allegro.ItemsListType[] tab = data.Result.itemsList;
                 for(int i = 0; i < data.Result.itemsList.Length ; i++ ){
-                    if(id == data.Result.itemsList[i].itemId ){
-                        Console.WriteLine(data.Result.itemsList[i].itemId);
-                        Console.WriteLine(data.Result.itemsList[i].sellerInfo.userLogin);
-                        Console.WriteLine(data.Result.itemsList[i].priceInfo[0].priceValue);
+                    if(id == tab[i].itemId){
+                        Console.WriteLine("Id aukcji: " + tab[i].itemId 
+                        + " | " + "Sprzedawca: " + tab[i].sellerInfo.userLogin 
+                        + " | " + "Cena: " + tab[i].priceInfo[0].priceValue);
                     }
                 }
                 Thread.Sleep(60000);
