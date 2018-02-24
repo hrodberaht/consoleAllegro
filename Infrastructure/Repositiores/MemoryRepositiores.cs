@@ -12,7 +12,7 @@ namespace App3.Repositiores
         }
         public void addToMemoryRepository()
         {
-            data.Add(new TrackingAuctions());
+            //data.Add(new TrackingAuctions());
         }
 
         public void deleteFromMemoryRepository()
