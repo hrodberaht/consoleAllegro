@@ -1,5 +1,7 @@
 using System;
 using System.Threading;
+using App3.Infrastructure.ConnectionToAllegro;
+using App3.Infrastructure.FiltersForAllegroRequest;
 using App3.Infrastructure.Services;
 
 namespace App3.View
@@ -9,7 +11,7 @@ namespace App3.View
         IGetPriceService price;
         public View()
         {
-            price = new GetPriceService();
+            price = new GetPriceService(new SearchFilter(), new CreateConnectToAllegroWDSL());
         }
         
         

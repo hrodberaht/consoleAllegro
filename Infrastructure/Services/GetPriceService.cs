@@ -1,7 +1,8 @@
 using System;
 using System.Threading;
-using App3.Core.Connections;
 using App3.Domain;
+using App3.Infrastructure.ConnectionToAllegro;
+using App3.Infrastructure.FiltersForAllegroRequest;
 
 namespace App3.Infrastructure.Services
 {
@@ -10,23 +11,23 @@ namespace App3.Infrastructure.Services
         long id = Config.auctionId;
         string auctionTitle = Config.auctionTitle;
         string webApi = Config.webApi;
-        
+
+        private readonly Allegro.FilterOptionsType[] _filter;
+        private readonly Allegro.servicePortClient _sendRequest;
+        public GetPriceService(IFilter serach,ICreateConnectToAllegroWDSL allegro)
+        {
+            _filter = serach.createFilter();
+            _sendRequest = allegro.connect();
+        }
 
         //create request
         public TrackingAuctions getPrice()
         {
-            var sendRequest = CreateConnectToAllegroWDSL.connect;
-
-            Allegro.FilterOptionsType[] filter = new Allegro.FilterOptionsType[1];
-            filter[0] = new Allegro.FilterOptionsType();
-            filter[0].filterId = "search";
-            string[] title = new string[1];
-            title[0] = auctionTitle;
-            filter[0].filterValueId = title;
+           
             
-            var request = new Allegro.doGetItemsListRequest(webApi,1,filter,null,100,0,1);
+            var request = new Allegro.doGetItemsListRequest(webApi,1,_filter,null,100,0,1);
         
-            var data = sendRequest.doGetItemsListAsync(request);
+            var data = _sendRequest.doGetItemsListAsync(request);
             Allegro.ItemsListType[] tab = data.Result.itemsList;
 
             for(int i = 0; i < data.Result.itemsList.Length ; i++ ){
