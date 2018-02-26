@@ -11,6 +11,8 @@ namespace App2
         {
             bool run = true;
             View view = new View();
+            IMenu menu = new Menu();
+            menu.start();
 
             while(run)
             {
