@@ -24,7 +24,6 @@ namespace App3.Infrastructure.Services
         public TrackingAuctions getPrice()
         {
            
-            
             var request = new Allegro.doGetItemsListRequest(webApi,1,_filter,null,100,0,1);
         
             var data = _sendRequest.doGetItemsListAsync(request);

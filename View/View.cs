@@ -9,6 +9,7 @@ namespace App3.View
     public class View
     {
         IGetPriceService price;
+        float isPriceChange = 0;
         public View()
         {
             price = new GetPriceService(new SearchFilter(), new CreateConnectToAllegroWDSL());
@@ -17,13 +18,16 @@ namespace App3.View
         
         public void show()
         {
-            Console.WriteLine(DateTime.Now.ToString("h:mm:ss tt"));
             var data = price.getPrice();
-            
-            Console.WriteLine("Id aukcji: " + data.auctionId
-            + " | " + "Sprzedawca: " + data.sellerLogin 
-            + " | " + "Cena: " + data.price);
-            Console.WriteLine("----------------------------");
+            if (isPriceChange != data.price)
+            {
+                Console.WriteLine(DateTime.Now.ToString("h:mm:ss tt"));
+                Console.WriteLine("Id aukcji: " + data.auctionId
+                + " | " + "Sprzedawca: " + data.sellerLogin 
+                + " | " + "Cena: " + data.price);
+                Console.WriteLine("----------------------------");
+                isPriceChange = data.price;
+            }
             Thread.Sleep(60000);
         }
     }
